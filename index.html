@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DadPro</title>
+<meta name="description" content="DadPro turns your kid's age into a weekly briefing: the milestones live right now, one guide worth ten minutes, and one thing only you can do. 139 guides, 281 milestones, free on iPhone.">
+<link rel="icon" href="assets/dadpro-icon.png">
+<link rel="apple-touch-icon" href="assets/dadpro-icon.png">
+<meta property="og:title" content="DadPro">
+<meta property="og:description" content="A weekly briefing on your kid. 139 guides, 281 milestones, and a vaccine page that tells you the truth. Free on iPhone.">
+<meta property="og:image" content="https://dadproapp.github.io/assets/dadpro-icon.png">
+<meta property="og:url" content="https://dadproapp.github.io/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{
+  --ink:#0A1017;
+  --navy:#0E3C68;
+  --navy-deep:#082A4C;
+  --blue:#1E9BE3;
+  --blue-dark:#1478B4;
+  --amber:#E09338;
+  --paper:#F4F6F9;
+  --card:#FFFFFF;
+  --line:#DBE2EA;
+  --mute:#5D6B7B;
+  --shadow:0 1px 2px rgba(10,16,23,.05), 0 12px 32px -12px rgba(10,16,23,.16);
+  --radius:16px;
+  --maxw:1120px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#EDF2F7;
+    --paper:#0B1219;
+    --card:#131C26;
+    --line:#25313E;
+    --mute:#93A3B4;
+    --navy:#0C3358;
+    --navy-deep:#06203C;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px -12px rgba(0,0,0,.6);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:Outfit,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-weight:800;letter-spacing:-.02em;text-wrap:balance;margin:0}
+p{margin:0}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+
+/* ---------- header ---------- */
+.site-head{
+  position:sticky;top:0;z-index:20;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:saturate(160%) blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.head-in{display:flex;align-items:center;gap:20px;height:66px}
+.head-logo{height:26px;width:auto}
+.head-nav{display:flex;gap:22px;margin-left:auto;align-items:center}
+.head-nav a{
+  text-decoration:none;color:var(--mute);font-size:14.5px;font-weight:500;
+}
+.head-nav a:hover{color:var(--ink)}
+@media (max-width:720px){ .head-nav a.opt{display:none} }
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--ink);color:var(--paper);
+  text-decoration:none;font-weight:600;font-size:15px;
+  padding:11px 20px;border-radius:999px;border:0;
+  transition:transform .16s ease, background .16s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn svg{width:16px;height:16px;fill:currentColor;flex:none}
+.btn-lg{font-size:16px;padding:14px 24px}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-blue:hover{background:var(--blue-dark)}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.34)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+
+/* ---------- hero ---------- */
+.hero{
+  background:
+    radial-gradient(1100px 460px at 78% -8%, rgba(30,155,227,.34), transparent 62%),
+    linear-gradient(168deg, var(--navy) 0%, var(--navy-deep) 100%);
+  color:#fff;
+  padding:76px 0 84px;
+  border-bottom:1px solid var(--line);
+}
+.hero-grid{display:grid;grid-template-columns:1fr 386px;gap:56px;align-items:start}
+@media (max-width:940px){ .hero-grid{grid-template-columns:1fr;gap:44px} }
+.eyebrow{
+  font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:#7FCBF2;margin-bottom:18px;
+}
+.hero h1{font-size:clamp(38px,5.6vw,60px);line-height:1.03;color:#fff}
+.hero h1 em{font-style:normal;color:#69C0EE}
+.hero-sub{margin-top:22px;font-size:18.5px;line-height:1.58;color:#C6DAEA;max-width:30em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:13px;margin-top:34px;align-items:center}
+.hero-note{margin-top:20px;font-size:13.5px;color:#8FB0C9;letter-spacing:.01em}
+
+/* ---------- the phone / briefing ---------- */
+.phone{
+  background:#fff;border-radius:26px;padding:9px;
+  box-shadow:0 2px 4px rgba(0,0,0,.2), 0 40px 70px -28px rgba(0,0,0,.62);
+}
+.phone-inner{background:#fff;border-radius:19px;overflow:hidden}
+.phone-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px 4px;color:#0A1017;
+}
+.phone-time{font-size:13px;font-weight:600;font-family:"IBM Plex Mono",monospace}
+.phone-notch{width:74px;height:19px;background:#0A1017;border-radius:999px}
+.phone-bars{display:flex;gap:3px;align-items:flex-end}
+.phone-bars i{display:block;width:3px;background:#0A1017;border-radius:1px}
+.phone-body{padding:14px 16px 16px}
+.ph-hi{display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.ph-hi img{width:22px;height:22px;object-fit:contain}
+.ph-hi span{font-family:Outfit,sans-serif;font-weight:800;font-size:19px;color:#0A1017}
+.ph-hi small{margin-left:auto;font-size:12px;color:#7A8796;font-weight:500}
+
+.brief{
+  background:linear-gradient(160deg,#12467A,#0A2E52);
+  border-radius:15px;padding:17px 17px 15px;color:#fff;
+}
+.brief-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.brief-stage{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#74C4EF}
+.brief-age{font-size:12px;color:#B6D2E6;font-family:"IBM Plex Mono",monospace}
+.brief h3{font-size:21px;margin:7px 0 8px;color:#fff;line-height:1.15}
+.brief-line{font-size:13.5px;line-height:1.5;color:#CBDEEC;min-height:3em}
+.brief-chips{display:flex;gap:7px;margin-top:13px;flex-wrap:wrap}
+.brief-chips span{
+  background:rgba(255,255,255,.13);border-radius:8px;
+  font-size:11.5px;padding:5px 10px;color:#E4F0F8;font-weight:500;
+}
+
+.ph-row{
+  display:flex;align-items:center;gap:11px;
+  background:var(--paper);border-radius:13px;padding:12px 13px;margin-top:9px;
+}
+.ph-ico{
+  width:34px;height:34px;border-radius:10px;flex:none;
+  display:grid;place-items:center;font-size:16px;
+}
+.ph-ico.b{background:#DCEEFA}
+.ph-ico.a{background:#FAEEDC}
+.ph-ico svg{
+  width:18px;height:18px;fill:none;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+.ph-ico.b svg{stroke:var(--blue-dark)}
+.ph-ico.a svg{stroke:#B87A22}
+.ph-txt{min-width:0}
+.ph-txt strong{display:block;font-size:13.5px;font-weight:600;color:#0A1017;line-height:1.3}
+.ph-txt em{display:block;font-style:normal;font-size:11.5px;color:#78848F;margin-top:2px}
+.ph-arrow{margin-left:auto;color:#9AA6B2;font-size:15px;flex:none}
+.ph-tabs{
+  display:flex;justify-content:space-between;
+  border-top:1px solid #E6EBF0;margin-top:14px;padding:11px 4px 4px;
+}
+.ph-tabs span{font-size:9.5px;color:#97A3AF;font-weight:500;letter-spacing:.01em}
+.ph-tabs span.on{color:var(--blue);font-weight:600}
+
+/* stage picker */
+.picker{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+.picker button{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500;
+  background:rgba(255,255,255,.09);color:#BDD6E8;
+  border:1px solid rgba(255,255,255,.16);border-radius:999px;
+  padding:6px 13px;cursor:pointer;transition:all .15s ease;
+}
+.picker button:hover{background:rgba(255,255,255,.18);color:#fff}
+.picker button[aria-pressed="true"]{background:#fff;color:#0C3258;border-color:#fff;font-weight:600}
+.picker button:focus-visible{outline:2px solid #7FCBF2;outline-offset:2px}
+
+/* ---------- stats ---------- */
+.stats{border-bottom:1px solid var(--line);background:var(--card)}
+.stats-in{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+@media (max-width:760px){ .stats-in{grid-template-columns:repeat(2,1fr)} }
+.stat{background:var(--card);padding:26px 24px}
+.stat b{
+  display:block;font-family:Outfit,sans-serif;font-weight:800;
+  font-size:34px;line-height:1;letter-spacing:-.03em;
+}
+.stat span{display:block;margin-top:7px;font-size:13px;color:var(--mute);line-height:1.4}
+
+/* ---------- sections ---------- */
+section{padding:88px 0}
+.sec-head{max-width:34em;margin-bottom:40px}
+.sec-head .eyebrow{color:var(--blue)}
+.sec-head h2{font-size:clamp(28px,3.6vw,38px);line-height:1.1}
+.sec-head p{margin-top:16px;font-size:17.5px;color:var(--mute);line-height:1.6}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+@media (max-width:900px){ .split{grid-template-columns:1fr;gap:34px} }
+
+.panel{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;
+}
+.panel-head{
+  padding:14px 18px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:10px;
+}
+.panel-head .mono{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex:none}
+
+.ms{display:flex;gap:13px;padding:15px 18px;border-bottom:1px solid var(--line)}
+.ms:last-child{border-bottom:0}
+.check{
+  width:21px;height:21px;border-radius:6px;flex:none;margin-top:2px;
+  border:1.5px solid var(--line);display:grid;place-items:center;
+  font-size:11px;color:transparent;
+}
+.ms.done .check{background:var(--blue);border-color:var(--blue);color:#fff}
+.ms strong{display:block;font-size:15px;font-weight:600;line-height:1.35}
+.ms p{font-size:13.5px;color:var(--mute);margin-top:4px;line-height:1.5}
+.ms .cite{
+  display:inline-block;margin-top:6px;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--blue);font-weight:600;
+}
+
+.guides{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:900px){ .guides{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:580px){ .guides{grid-template-columns:1fr} }
+.guide{
+  background:var(--card);border:1px solid var(--line);border-radius:13px;
+  padding:18px;display:flex;flex-direction:column;gap:8px;
+}
+.guide .tag{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--blue);font-weight:600;
+}
+.guide h3{font-size:16.5px;font-weight:700;line-height:1.25}
+.guide p{font-size:14px;color:var(--mute);line-height:1.5}
+.guide .len{
+  margin-top:auto;padding-top:8px;font-family:"IBM Plex Mono",monospace;
+  font-size:11.5px;color:var(--mute);
+}
+
+/* vaccines */
+.vax{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.vax-card{
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  background:var(--paper);
+}
+.vax-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
+@media (max-width:700px){ .vax-row{grid-template-columns:1fr} }
+.vax-col{background:var(--card);padding:22px}
+.vax-col .mono{
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue);font-weight:600;
+}
+.vax-col h3{font-size:17px;margin:8px 0 9px;font-weight:700}
+.vax-col p{font-size:14.5px;color:var(--mute);line-height:1.55}
+.vax-foot{padding:18px 22px;background:var(--card);border-top:1px solid var(--line)}
+.vax-foot p{font-size:14.5px;line-height:1.6;color:var(--ink)}
+.vax-foot .src{
+  margin-top:11px;font-family:"IBM Plex Mono",monospace;
+  font-size:11.5px;color:var(--mute);line-height:1.7;
+}
+
+/* closing */
+.close{
+  background:linear-gradient(168deg,var(--navy),var(--navy-deep));
+  color:#fff;text-align:center;
+}
+.close h2{font-size:clamp(28px,4vw,42px);color:#fff;max-width:15em;margin:0 auto}
+.close p{margin:18px auto 0;color:#C0D6E7;font-size:17.5px;max-width:30em}
+.close .hero-cta{justify-content:center}
+
+/* footer */
+footer{padding:48px 0 56px;font-size:14.5px;color:var(--mute)}
+.foot-in{display:flex;flex-wrap:wrap;gap:20px 36px;align-items:center}
+.foot-in img{height:22px;opacity:.85}
+.foot-links{display:flex;flex-wrap:wrap;gap:22px;margin-left:auto}
+.foot-links a{color:var(--mute);text-decoration:none}
+.foot-links a:hover{color:var(--ink);text-decoration:underline}
+.foot-legal{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);font-size:13px;line-height:1.6}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important}
+  .btn:hover{transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap head-in">
+    <img class="head-logo" src="assets/dadpro-logo.png" alt="DadPro">
+    <nav class="head-nav">
+      <a href="#week" class="opt">This week</a>
+      <a href="#milestones" class="opt">Milestones</a>
+      <a href="#guides" class="opt">Guides</a>
+      <a href="#vaccines" class="opt">Vaccines</a>
+      <a class="btn" href="https://apps.apple.com/us/app/dadpro/id6762537686">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.54c.02-2.2 1.8-3.26 1.88-3.31-1.02-1.5-2.62-1.7-3.18-1.72-1.35-.14-2.64.79-3.33.79-.69 0-1.75-.77-2.87-.75-1.48.02-2.84.86-3.6 2.18-1.53 2.66-.39 6.6 1.1 8.76.73 1.06 1.6 2.25 2.74 2.2 1.1-.04 1.52-.71 2.85-.71 1.33 0 1.7.71 2.86.69 1.18-.02 1.93-1.07 2.65-2.14.84-1.23 1.18-2.42 1.2-2.48-.03-.01-2.3-.88-2.32-3.51zM14.9 5.9c.6-.74 1.01-1.75.9-2.77-.87.04-1.93.58-2.56 1.3-.56.64-1.06 1.68-.93 2.67.97.08 1.97-.49 2.59-1.2z"/></svg>
+        Get it free
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<div class="hero" id="week">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Free on iPhone</div>
+      <h1>Nobody handed you a manual.<br><em>So we wrote one that knows what week it is.</em></h1>
+      <p class="hero-sub">
+        DadPro takes one thing from you, your kid's birthday, and turns it into a briefing you
+        get every week: the milestones that are live right now, one guide worth ten minutes,
+        and one thing only you can do.
+      </p>
+
+      <div class="hero-cta">
+        <a class="btn btn-blue btn-lg" href="https://apps.apple.com/us/app/dadpro/id6762537686">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.54c.02-2.2 1.8-3.26 1.88-3.31-1.02-1.5-2.62-1.7-3.18-1.72-1.35-.14-2.64.79-3.33.79-.69 0-1.75-.77-2.87-.75-1.48.02-2.84.86-3.6 2.18-1.53 2.66-.39 6.6 1.1 8.76.73 1.06 1.6 2.25 2.74 2.2 1.1-.04 1.52-.71 2.85-.71 1.33 0 1.7.71 2.86.69 1.18-.02 1.93-1.07 2.65-2.14.84-1.23 1.18-2.42 1.2-2.48-.03-.01-2.3-.88-2.32-3.51zM14.9 5.9c.6-.74 1.01-1.75.9-2.77-.87.04-1.93.58-2.56 1.3-.56.64-1.06 1.68-.93 2.67.97.08 1.97-.49 2.59-1.2z"/></svg>
+          Download on the App Store
+        </a>
+        <a class="btn btn-ghost btn-lg" href="#milestones">See what's inside</a>
+      </div>
+
+      <p class="hero-note">No account required. Set up your kid in under two minutes.</p>
+
+      <div class="picker" id="picker" role="group" aria-label="Pick an age to preview the weekly briefing"></div>
+    </div>
+
+    <!-- phone -->
+    <div class="phone" aria-live="polite">
+      <div class="phone-inner">
+        <div class="phone-top">
+          <span class="phone-time">9:41</span>
+          <span class="phone-notch" aria-hidden="true"></span>
+          <span class="phone-bars" aria-hidden="true">
+            <i style="height:5px"></i><i style="height:8px"></i><i style="height:11px"></i><i style="height:14px"></i>
+          </span>
+        </div>
+        <div class="phone-body">
+          <div class="ph-hi">
+            <img src="assets/dadpro-icon.png" alt="">
+            <span>Hey, Dad.</span>
+            <small id="phKid">Em</small>
+          </div>
+
+          <div class="brief">
+            <div class="brief-top">
+              <span class="brief-stage" id="bStage">TODDLER</span>
+              <span class="brief-age" id="bAge">18 mo</span>
+            </div>
+            <h3 id="bTitle">This week with Em</h3>
+            <p class="brief-line" id="bLine"></p>
+            <div class="brief-chips" id="bChips"></div>
+          </div>
+
+          <div class="ph-row">
+            <span class="ph-ico b" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M6 3v18M6 4h11l-2.2 3.5L17 11H6z"/></svg>
+            </span>
+            <span class="ph-txt"><strong id="bMile">Points to show you something</strong><em id="bMileSub">Milestone live this week</em></span>
+            <span class="ph-arrow" aria-hidden="true">&rsaquo;</span>
+          </div>
+
+          <div class="ph-row">
+            <span class="ph-ico b" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h5v15H6a2 2 0 0 0-2 1.5zM20 5.5A2 2 0 0 0 18 4h-5v15h5a2 2 0 0 1 2 1.5z"/></svg>
+            </span>
+            <span class="ph-txt"><strong id="bGuide">Tantrums Are Not Manipulation</strong><em id="bGuideSub">10 min read</em></span>
+            <span class="ph-arrow" aria-hidden="true">&rsaquo;</span>
+          </div>
+
+          <div class="ph-row">
+            <span class="ph-ico a" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0zM7 5H4v2a3 3 0 0 0 3 3M17 5h3v2a3 3 0 0 1-3 3M10 14h4v3h-4zM8 20h8"/></svg>
+            </span>
+            <span class="ph-txt"><strong id="bWin">Tantrum handled calmly</strong><em>Your dad win</em></span>
+            <span class="ph-arrow" aria-hidden="true">&rsaquo;</span>
+          </div>
+
+          <div class="ph-tabs">
+            <span class="on">Today</span><span>Guide</span><span>Milestones</span><span>Vaccines</span><span>More</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= STATS ================= -->
+<div class="stats">
+  <div class="wrap"><div class="stats-in">
+    <div class="stat"><b>139</b><span>guides, written for dads and checked against AAP, CDC, FDA and NHTSA sources</span></div>
+    <div class="stat"><b>281</b><span>milestones, covering every CDC "Learn the Signs" checklist from 2 months to 5 years</span></div>
+    <div class="stat"><b>37</b><span>vaccine doses tracked, with both the AAP and CDC schedules shown side by side</span></div>
+    <div class="stat"><b>0&ndash;18</b><span>years covered, from the first trimester through the teenage years</span></div>
+  </div></div>
+</div>
+
+<!-- ================= MILESTONES ================= -->
+<section id="milestones">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Milestones</div>
+      <h2>The CDC checklist, minus the clinical voice</h2>
+      <p>
+        Every developmental item comes from the CDC's "Learn the Signs. Act Early." checklists,
+        which list what 75% or more of children can do by a given age. We kept the standard and
+        rewrote the explanation for a guy who has never done this before. Then we added the
+        milestones that are yours, not the baby's.
+      </p>
+    </div>
+
+    <div class="split">
+      <div class="panel">
+        <div class="panel-head"><span class="dot"></span><span class="mono">9 months &middot; live now</span></div>
+        <div class="ms done">
+          <span class="check" aria-hidden="true">&#10003;</span>
+          <div>
+            <strong>Looks when you call their name</strong>
+            <p>Turns toward you when you say the name. If they never respond to their name, bring it up at the visit.</p>
+            <span class="cite">CDC 9 months</span>
+          </div>
+        </div>
+        <div class="ms done">
+          <span class="check" aria-hidden="true">&#10003;</span>
+          <div>
+            <strong>Sits without support</strong>
+            <p>Hands free to play.</p>
+            <span class="cite">CDC 9 months</span>
+          </div>
+        </div>
+        <div class="ms">
+          <span class="check" aria-hidden="true">&#10003;</span>
+          <div>
+            <strong>Looks for things that drop out of sight</strong>
+            <p>Spoon goes off the tray, eyes follow.</p>
+            <span class="cite">CDC 9 months</span>
+          </div>
+        </div>
+        <div class="ms">
+          <span class="check" aria-hidden="true">&#10003;</span>
+          <div>
+            <strong>First dad-and-kid outing</strong>
+            <p>Solo trip with the baby: store, park, coffee. Diaper bag packed by you.</p>
+            <span class="cite">Dad win</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font-size:22px;margin-bottom:14px">Half of them are for you</h3>
+        <p style="color:var(--mute);font-size:16.5px;line-height:1.65">
+          Take the night shift solo. Get the car seat checked by a certified tech. Learn the
+          difference between the four cries. Handle a tantrum without raising your voice. Those
+          are not on anybody's clinical chart, and they are most of what being a dad actually is,
+          so we track them next to the ones that are.
+        </p>
+        <p style="color:var(--mute);font-size:16.5px;line-height:1.65;margin-top:18px">
+          Check one off and it stays checked. The app moves the list forward as your kid ages, so
+          you are never scrolling past two years of stuff you already did.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GUIDES ================= -->
+<section id="guides" style="background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Guides</div>
+      <h2>139 guides that answer the actual question</h2>
+      <p>
+        Not blog posts. Each one is a five to twelve minute read that ends with something to do,
+        written in plain language and screened against primary medical sources before it ships.
+        A few of them:
+      </p>
+    </div>
+
+    <div class="guides">
+      <article class="guide">
+        <span class="tag">Newborn</span>
+        <h3>The First 72 Hours at Home</h3>
+        <p>What to expect, what to ignore, and how to not lose your mind.</p>
+        <span class="len">9 min</span>
+      </article>
+      <article class="guide">
+        <span class="tag">0 to 3 months</span>
+        <h3>The Witching Hour (and PURPLE Crying)</h3>
+        <p>Why evenings melt down from 5 to 10pm, and the protocol that actually works.</p>
+        <span class="len">6 min</span>
+      </article>
+      <article class="guide">
+        <span class="tag">3 to 6 months</span>
+        <h3>Introducing Allergens Early, the 6-Month Plan</h3>
+        <p>Peanut butter in at 6 months. The science, the schedule, and the script.</p>
+        <span class="len">8 min</span>
+      </article>
+      <article class="guide">
+        <span class="tag">6 to 12 months</span>
+        <h3>Separation Anxiety, Peaks at 8 to 10 Months</h3>
+        <p>The crying when you leave isn't a problem. It's proof the bond worked.</p>
+        <span class="len">10 min</span>
+      </article>
+      <article class="guide">
+        <span class="tag">Toddler</span>
+        <h3>The Power of Dad Playtime</h3>
+        <p>Rough-and-tumble play builds the brain. The research on why wrestling counts.</p>
+        <span class="len">10 min</span>
+      </article>
+      <article class="guide">
+        <span class="tag">Pregnancy</span>
+        <h3>How to Be a Birth Partner That Actually Helps</h3>
+        <p>Before, during, and after delivery, your real job.</p>
+        <span class="len">9 min</span>
+      </article>
+      <article class="guide">
+        <span class="tag">School age</span>
+        <h3>Kids and Smartphones: The Delay Is the Strategy</h3>
+        <p>Later is better. Actually.</p>
+        <span class="len">9 min</span>
+      </article>
+      <article class="guide">
+        <span class="tag">0 to 3 months</span>
+        <h3>Postpartum Depression, For Her AND You</h3>
+        <p>How to spot postpartum mood disorders in both parents, and what to do next.</p>
+        <span class="len">7 min</span>
+      </article>
+      <article class="guide">
+        <span class="tag">Teen</span>
+        <h3>Alcohol and Drugs, The Real Conversation</h3>
+        <p>Honest beats scare tactics.</p>
+        <span class="len">12 min</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VACCINES ================= -->
+<section class="vax" id="vaccines">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Vaccines</div>
+      <h2>In 2026, "the schedule" stopped being one schedule</h2>
+      <p>
+        Most tracking apps still show a single list and call it settled. That is no longer true in
+        the United States, and pretending otherwise is not a service to anybody. So DadPro shows
+        you both, for all 37 doses, and tells you where they differ.
+      </p>
+    </div>
+
+    <div class="vax-card">
+      <div class="vax-row">
+        <div class="vax-col">
+          <span class="mono">AAP &middot; Feb 5, 2026</span>
+          <h3>The AAP 2026 schedule</h3>
+          <p>
+            Published by the American Academy of Pediatrics on February 5, 2026, and endorsed by
+            twelve other medical organizations including the AAFP, ACOG, AMA, IDSA and NAPNAP.
+            Roughly 28 states follow it.
+          </p>
+        </div>
+        <div class="vax-col">
+          <span class="mono">CDC &middot; Jul 2, 2025</span>
+          <h3>The CDC published schedule</h3>
+          <p>
+            The schedule CDC published on July 2, 2025. A January 2026 revision would have re-tiered
+            several vaccines; a federal court stayed that revision on March 16, 2026, and the appeal
+            is pending. The app shows what the revision would have changed.
+          </p>
+        </div>
+      </div>
+      <div class="vax-foot">
+        <p>
+          For every dose you also get what the disease actually does, why the timing is what it is,
+          the real side effect rates, and the sentence that matters most: decide with your
+          pediatrician, because they know your child's history and a phone app does not.
+        </p>
+        <p class="src">
+          Sources: AAP immunization schedule (Feb 5, 2026) &middot; CDC child and adolescent schedule
+          (Jul 2, 2025) &middot; Congressional Research Service R48982 &middot; AAP v. Kennedy, D. Mass.
+          Verified September 12, 2026.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CLOSE ================= -->
+<section class="close">
+  <div class="wrap">
+    <h2>You are going to be good at this.</h2>
+    <p>You just need to know what week it is. That part we can handle.</p>
+    <div class="hero-cta">
+      <a class="btn btn-blue btn-lg" href="https://apps.apple.com/us/app/dadpro/id6762537686">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.54c.02-2.2 1.8-3.26 1.88-3.31-1.02-1.5-2.62-1.7-3.18-1.72-1.35-.14-2.64.79-3.33.79-.69 0-1.75-.77-2.87-.75-1.48.02-2.84.86-3.6 2.18-1.53 2.66-.39 6.6 1.1 8.76.73 1.06 1.6 2.25 2.74 2.2 1.1-.04 1.52-.71 2.85-.71 1.33 0 1.7.71 2.86.69 1.18-.02 1.93-1.07 2.65-2.14.84-1.23 1.18-2.42 1.2-2.48-.03-.01-2.3-.88-2.32-3.51zM14.9 5.9c.6-.74 1.01-1.75.9-2.77-.87.04-1.93.58-2.56 1.3-.56.64-1.06 1.68-.93 2.67.97.08 1.97-.49 2.59-1.2z"/></svg>
+        Download DadPro
+      </a>
+    </div>
+    <p style="margin-top:22px;font-size:14px;color:#8FB0C9">Requires iPhone with iOS 18 or later.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-in">
+      <img src="assets/dadpro-logo.png" alt="DadPro">
+      <div class="foot-links">
+        <a href="https://apps.apple.com/us/app/dadpro/id6762537686">App Store</a>
+        <a href="https://dadproapp.github.io/privacy-policy/">Privacy Policy</a>
+        <a href="mailto:info@beadadpro.com">Support</a>
+        <a href="mailto:info@beadadpro.com?subject=DadPro%20feedback">Feedback</a>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <p>
+        DadPro is an educational tool for fathers. It is not medical advice and it does not replace
+        your pediatrician. Milestone data follows the CDC's "Learn the Signs. Act Early." program.
+        If you are worried about your child's development or health, call your pediatrician.
+      </p>
+      <p style="margin-top:10px">
+        &copy; 2026 DadPro. Questions: <a href="mailto:info@beadadpro.com">info@beadadpro.com</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Every line below is real content from the shipped app.
+var STAGES = [
+  {
+    key:"pregnancy", chip:"Week 20", stage:"PREGNANCY", age:"wk 20", kid:"the bump",
+    title:"This week with the bump",
+    line:"The anatomy scan is the big one. Twenty weeks in, they check every organ and limb. Do not miss this appointment.",
+    chips:["Week 20","Second trimester"],
+    mile:"Attend the anatomy scan", mileSub:"Window: weeks 18 to 22",
+    guide:"Second Trimester: The 'Easy' Months", guideMin:"8 min read",
+    win:"Lock in paternity leave"
+  },
+  {
+    key:"newborn", chip:"Week 2", stage:"NEWBORN", age:"wk 2", kid:"Sam",
+    title:"This week with Sam",
+    line:"Weight should be back to birth weight by now. Six or more wet diapers a day. Short tummy time while somebody is watching.",
+    chips:["2 weeks","Newborn"],
+    mile:"Feeds well and has enough wet diapers", mileSub:"By day five, six or more a day",
+    guide:"The First 72 Hours at Home", guideMin:"9 min read",
+    win:"Takes the night shift solo"
+  },
+  {
+    key:"0-3mo", chip:"Month 2", stage:"0 TO 3 MONTHS", age:"2 mo", kid:"Sam",
+    title:"This week with Sam",
+    line:"The first real social smile shows up around now, and it is not the gassy one. Two-month visit is due, and the first big round of shots with it.",
+    chips:["2 months","2-month visit"],
+    mile:"Smiles when you talk to or smile at them", mileSub:"CDC 2 months",
+    guide:"Tummy Time Without the Tears", guideMin:"6 min read",
+    win:"Dad does daily dedicated play time"
+  },
+  {
+    key:"3-6mo", chip:"Month 4", stage:"3 TO 6 MONTHS", age:"4 mo", kid:"Sam",
+    title:"This week with Sam",
+    line:"Sleep just got worse and that is a good sign. The four-month change is a permanent upgrade to how they sleep, not a regression.",
+    chips:["4 months","4-month visit"],
+    mile:"Chuckles when you try to make them laugh", mileSub:"CDC 4 months",
+    guide:"The 4-Month Sleep Regression", guideMin:"9 min read",
+    win:"Belly laughs at your faces"
+  },
+  {
+    key:"6-12mo", chip:"Month 9", stage:"6 TO 12 MONTHS", age:"9 mo", kid:"Sam",
+    title:"This week with Sam",
+    line:"They cry when you leave the room now. That is not a problem to fix, it is proof the attachment worked. Sitting unsupported and hunting dropped spoons.",
+    chips:["9 months","9-month visit"],
+    mile:"Looks when you call their name", mileSub:"CDC 9 months",
+    guide:"Separation Anxiety, Peaks at 8 to 10 Months", guideMin:"10 min read",
+    win:"First dad-and-kid outing"
+  },
+  {
+    key:"toddler", chip:"18 months", stage:"TODDLER", age:"18 mo", kid:"Em",
+    title:"This week with Em",
+    line:"Pointing to share, not to demand, is the milestone this month. Tantrums are overwhelm, not strategy. Connection before correction.",
+    chips:["18 months","Toddler"],
+    mile:"Points to show you something interesting", mileSub:"CDC 18 months",
+    guide:"Tantrums Are Not Manipulation", guideMin:"10 min read",
+    win:"Tantrum handled calmly"
+  },
+  {
+    key:"preschool", chip:"Age 4", stage:"PRESCHOOL", age:"4 yr", kid:"Em",
+    title:"This week with Em",
+    line:"They want a job. Give them one that actually matters. Four-year-olds start comforting friends who are hurt, which they learned by watching you.",
+    chips:["4 years","Preschool"],
+    mile:"Comforts a friend who is hurt or sad", mileSub:"CDC 4 years",
+    guide:"Big Feelings Toolkit", guideMin:"9 min read",
+    win:"Reading together every day"
+  },
+  {
+    key:"school", chip:"Age 7", stage:"SCHOOL AGE", age:"7 yr", kid:"Em",
+    title:"This week with Em",
+    line:"Same time, same place, phone away. Yours too. Losing gracefully is learned by watching somebody do it, so lose at cards on purpose.",
+    chips:["7 years","School age"],
+    mile:"Handles losing gracefully", mileSub:"Window: 6 to 9 years",
+    guide:"Homework Battles, Solved", guideMin:"8 min read",
+    win:"Has a dad-and-kid tradition"
+  }
+];
+
+(function(){
+  var picker = document.getElementById("picker");
+  var el = {
+    stage:  document.getElementById("bStage"),
+    age:    document.getElementById("bAge"),
+    title:  document.getElementById("bTitle"),
+    line:   document.getElementById("bLine"),
+    chips:  document.getElementById("bChips"),
+    mile:   document.getElementById("bMile"),
+    mileSub:document.getElementById("bMileSub"),
+    guide:  document.getElementById("bGuide"),
+    guideSub:document.getElementById("bGuideSub"),
+    win:    document.getElementById("bWin"),
+    kid:    document.getElementById("phKid")
+  };
+
+  function render(i){
+    var s = STAGES[i];
+    el.stage.textContent = s.stage;
+    el.age.textContent   = s.age;
+    el.title.textContent = s.title;
+    el.line.textContent  = s.line;
+    el.mile.textContent  = s.mile;
+    el.mileSub.textContent = s.mileSub;
+    el.guide.textContent = s.guide;
+    el.guideSub.textContent = s.guideMin;
+    el.win.textContent   = s.win;
+    el.kid.textContent   = s.kid;
+    el.chips.innerHTML = "";
+    for (var c = 0; c < s.chips.length; c++){
+      var span = document.createElement("span");
+      span.textContent = s.chips[c];
+      el.chips.appendChild(span);
+    }
+    var btns = picker.querySelectorAll("button");
+    for (var b = 0; b < btns.length; b++){
+      btns[b].setAttribute("aria-pressed", b === i ? "true" : "false");
+    }
+  }
+
+  for (var i = 0; i < STAGES.length; i++){
+    (function(idx){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = STAGES[idx].chip;
+      b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", function(){ render(idx); });
+      picker.appendChild(b);
+    })(i);
+  }
+
+  render(5); // toddler, matches the static markup
+})();
+</script>
+
+</body>
+</html>
