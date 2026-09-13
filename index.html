@@ -19,10 +19,11 @@
 <style>
 :root{
   --ink:#0A1017;
-  --navy:#0E3C68;
-  --navy-deep:#082A4C;
-  --blue:#1E9BE3;
+  --navy:#0B4B84;
+  --navy-deep:#062D5D;
+  --blue:#1AA0ED;
   --blue-dark:#1478B4;
+  --blue-light:#54BEF6;
   --amber:#E09338;
   --paper:#F4F6F9;
   --card:#FFFFFF;
@@ -97,7 +98,7 @@ p{margin:0}
 /* ---------- hero ---------- */
 .hero{
   background:
-    radial-gradient(1100px 460px at 78% -8%, rgba(30,155,227,.34), transparent 62%),
+    radial-gradient(1100px 460px at 78% -8%, rgba(26,160,237,.34), transparent 62%),
     linear-gradient(168deg, var(--navy) 0%, var(--navy-deep) 100%);
   color:#fff;
   padding:76px 0 84px;
@@ -136,7 +137,7 @@ p{margin:0}
 .ph-hi small{margin-left:auto;font-size:12px;color:#7A8796;font-weight:500}
 
 .brief{
-  background:linear-gradient(160deg,#12467A,#0A2E52);
+  background:linear-gradient(160deg,#0B4B84,#062D5D);
   border-radius:15px;padding:17px 17px 15px;color:#fff;
 }
 .brief-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
@@ -308,6 +309,7 @@ footer{padding:48px 0 56px;font-size:14.5px;color:var(--mute)}
     <nav class="head-nav">
       <a href="#week" class="opt">This week</a>
       <a href="#milestones" class="opt">Milestones</a>
+      <a href="#moments" class="opt">Moments</a>
       <a href="#guides" class="opt">Guides</a>
       <a href="#vaccines" class="opt">Vaccines</a>
       <a class="btn" href="https://apps.apple.com/us/app/dadpro/id6762537686">
@@ -412,6 +414,8 @@ footer{padding:48px 0 56px;font-size:14.5px;color:var(--mute)}
     <div class="stat"><b>281</b><span>milestones, covering every CDC "Learn the Signs" checklist from 2 months to 5 years</span></div>
     <div class="stat"><b>37</b><span>vaccine doses tracked, with both the AAP and CDC schedules shown side by side</span></div>
     <div class="stat"><b>0&ndash;18</b><span>years covered, from the first trimester through the teenage years</span></div>
+    <div class="stat"><b>WHO</b><span>growth percentiles on every weigh-in, birth to two years</span></div>
+    <div class="stat"><b>12</b><span>well-child visits prepped, with the questions to ask and your own numbers</span></div>
   </div></div>
 </div>
 
@@ -475,7 +479,7 @@ footer{padding:48px 0 56px;font-size:14.5px;color:var(--mute)}
           so we track them next to the ones that are.
         </p>
         <p style="color:var(--mute);font-size:16.5px;line-height:1.65;margin-top:18px">
-          Check one off and it stays checked. The app moves the list forward as your kid ages, so
+          Check one off and it stays checked, and on their birthday the whole year comes back as a recap: everything they did, and everything you logged. Every Sunday you get the smaller version of the same thing. The app moves the list forward as your kid ages, so
           you are never scrolling past two years of stuff you already did.
         </p>
       </div>
@@ -484,6 +488,58 @@ footer{padding:48px 0 56px;font-size:14.5px;color:var(--mute)}
 </section>
 
 <!-- ================= GUIDES ================= -->
+<!-- ================= MOMENT CARDS ================= -->
+<section id="moments">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Moments</div>
+      <h2>They just did something. Tell everyone.</h2>
+      <p>
+        Check a milestone off and DadPro builds a card you can send: what they did,
+        exactly how old they were on the day, the date, and the photo you took.
+        It's free, because a card like this belongs in the group chat rather than
+        behind a paywall.
+      </p>
+    </div>
+
+    <div class="split">
+      <div class="panel" style="background:linear-gradient(160deg,#0B4B84,#062D5D);border:0;padding:34px;color:#fff">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:26px">
+          <img src="assets/dadpro-icon.png" alt="" style="height:34px;width:auto">
+          <strong style="font-family:Outfit,sans-serif;font-size:21px;font-weight:800">DadPro</strong>
+          <span class="mono" style="margin-left:auto;font-size:10px;letter-spacing:.14em;color:var(--blue-light)">SOCIAL</span>
+        </div>
+        <div style="font-size:15px;font-weight:700;color:var(--blue-light);margin-bottom:6px">Emilia</div>
+        <div style="font-family:Outfit,sans-serif;font-size:34px;font-weight:800;line-height:1.1;margin-bottom:14px">
+          Emilia is cruising the furniture!
+        </div>
+        <div style="font-style:italic;font-size:15px;color:rgba(255,255,255,.88);margin-bottom:28px">
+          &ldquo;Straight for the coffee table, every time.&rdquo;
+        </div>
+        <div style="display:flex;gap:9px">
+          <span style="background:rgba(255,255,255,.14);border-radius:999px;padding:6px 13px;font-size:12px;font-weight:600">12 months</span>
+          <span style="background:rgba(255,255,255,.14);border-radius:999px;padding:6px 13px;font-size:12px;font-weight:600">September 13, 2026</span>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font-size:22px;margin-bottom:14px">Written like a person, not a chart</h3>
+        <p style="color:var(--mute);font-size:16.5px;line-height:1.65">
+          The milestone list uses the CDC's clinical wording, which is exactly right
+          when you are ticking a box. It is wrong on something you send to your
+          mother. So every one of the 281 has a second version written the way you
+          would actually say it out loud.
+        </p>
+        <p style="color:var(--mute);font-size:16.5px;line-height:1.65;margin-top:18px">
+          Nothing is uploaded. The photo stays on your phone until you choose to
+          send the card, and then it leaves as a picture you picked, to whoever you
+          picked.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="guides" style="background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head">
